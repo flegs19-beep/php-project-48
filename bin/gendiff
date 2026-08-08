@@ -4,7 +4,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use function Hexlet\Code\parseFile;
+use function Differ\Differ\genDiff;
 
 $doc = <<<DOC
 Generate diff
@@ -22,8 +22,6 @@ DOC;
 
 $args = \Docopt::handle($doc, ['version' => '1.0']);
 
-$firstFile = parseFile($args['<firstFile>']);
-$secondFile = parseFile($args['<secondFile>']);
+$diff = genDiff($args['<firstFile>'], $args['<secondFile>']);
 
-print_r($firstFile);
-print_r($secondFile);
+print_r($diff);
