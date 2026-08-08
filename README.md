@@ -25,3 +25,7 @@
 ## Gendiff — сравнение YAML-файлов
 
 [https://youtu.be/knlcfpfVadI](https://youtu.be/knlcfpfVadI)
+
+## Gendiff — рекурсивное сравнение файлов
+
+[https://youtu.be/utAlZHYT3ZM](https://youtu.be/utAlZHYT3ZM)
