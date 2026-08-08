@@ -24,4 +24,4 @@
 
 ## Gendiff — сравнение YAML-файлов
 
-[https://youtu.be/knlcfpfVadI] (https://youtu.be/knlcfpfVadI)
+[https://youtu.be/knlcfpfVadI](https://youtu.be/knlcfpfVadI)
