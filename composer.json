@@ -1,0 +1,19 @@
+{
+    "name": "hexlet/code",
+     "bin": [
+        "bin/gendiff"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Hexlet\\Code\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Elena"
+        }
+    ],
+    "require": {
+        "docopt/docopt": "^1.0"
+    }
+}
