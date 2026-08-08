@@ -4,6 +4,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use function Hexlet\Code\parseFile;
+
 $doc = <<<DOC
 Generate diff
 
@@ -18,4 +20,10 @@ Options:
   --format <fmt>                Report format [default: stylish]
 DOC;
 
-\Docopt::handle($doc, ['version' => '1.0']);
+$args = \Docopt::handle($doc, ['version' => '1.0']);
+
+$firstFile = parseFile($args['<firstFile>']);
+$secondFile = parseFile($args['<secondFile>']);
+
+print_r($firstFile);
+print_r($secondFile);
