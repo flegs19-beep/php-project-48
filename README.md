@@ -29,3 +29,7 @@
 ## Gendiff — рекурсивное сравнение файлов
 
 [https://youtu.be/utAlZHYT3ZM](https://youtu.be/utAlZHYT3ZM)
+
+## Gendiff — плоский формат plain
+
+[https://youtu.be/DwvsKS0hLFQ](https://youtu.be/DwvsKS0hLFQ)

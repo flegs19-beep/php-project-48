@@ -2,8 +2,8 @@
 
 namespace Differ\Differ;
 
-use function Differ\Formatters\Stylish\format;
 use function Funct\Collection\sortBy;
+use function Differ\Formatters\format;
 
 function buildDiff(object $data1, object $data2): array
 {
@@ -71,5 +71,5 @@ function genDiff(
 
     $tree = buildDiff($data1, $data2);
 
-    return format($tree);
+    return format($tree, $formatName);
 }
