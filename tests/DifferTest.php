@@ -28,4 +28,25 @@ TXT;
 
         $this->assertSame($expected, $actual);
     }
+
+    public function testGenDiffYaml(): void
+    {
+        $file1 = __DIR__ . '/fixtures/file1.yml';
+        $file2 = __DIR__ . '/fixtures/file2.yml';
+
+        $expected = <<<'TXT'
+{
+- follow: false
+  host: hexlet.io
+- proxy: 123.234.53.22
+- timeout: 50
++ timeout: 20
++ verbose: true
+}
+TXT;
+
+        $actual = genDiff($file1, $file2);
+
+        $this->assertSame($expected, $actual);
+    }
 }

@@ -2,8 +2,12 @@
 
 namespace Differ\Differ;
 
+use function Differ\Parsers\parse;
+
 function parseFile(string $filepath): object
 {
     $content = file_get_contents($filepath);
-    return json_decode($content);
+    $format = pathinfo($filepath, PATHINFO_EXTENSION);
+
+    return parse($content, $format);
 }

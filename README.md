@@ -18,6 +18,10 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=flegs19-beep_php-project-48&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=flegs19-beep_php-project-48)
 
 
-## Пример работы пакета
+## Gendiff — сравнение JSON-файлов
 
 [https://youtu.be/3YhX7zuXSKc](https://youtu.be/3YhX7zuXSKc)
+
+## Gendiff — сравнение YAML-файлов
+
+[https://youtu.be/knlcfpfVadI] (https://youtu.be/knlcfpfVadI)
