@@ -1,5 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/flegs19-beep/php-project-48/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/flegs19-beep/php-project-48/actions)
+[![PHP CI](https://github.com/flegs19-beep/php-project-48/actions/workflows/workflow.yml/badge.svg)](https://github.com/flegs19-beep/php-project-48/actions/workflows/workflow.yml)
+
 
 ### Sonar
 
@@ -18,4 +20,4 @@
 
 ## Пример работы пакета
 
-https://youtu.be/3YhX7zuXSKc
+[https://youtu.be/3YhX7zuXSKc](https://youtu.be/3YhX7zuXSKc)
