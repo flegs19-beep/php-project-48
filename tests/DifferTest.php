@@ -146,7 +146,19 @@ TXT;
         $this->assertSame($expected, $actual);
     }
 
+    public function testGenDiffJsonFormat(): void
+    {
+        $file1 = __DIR__ . '/fixtures/file1.json';
+        $file2 = __DIR__ . '/fixtures/file2.json';
 
+        $actual = genDiff($file1, $file2, 'json');
+
+        $decoded = json_decode($actual, true);
+
+        $this->assertIsArray($decoded);
     }
+
+
+}
 
 

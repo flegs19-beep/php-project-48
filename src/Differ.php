@@ -11,7 +11,7 @@ function buildDiff(object $data1, object $data2): array
     $keys2 = array_keys(get_object_vars($data2));
 
     $keys = array_unique(array_merge($keys1, $keys2));
-    $sortedKeys = sortBy($keys, fn($key) => $key);
+    $sortedKeys = array_values(sortBy($keys, fn($key) => $key));
 
     return array_map(function ($key) use ($data1, $data2) {
         $hasKey1 = property_exists($data1, $key);

@@ -33,3 +33,7 @@
 ## Gendiff — плоский формат plain
 
 [https://youtu.be/DwvsKS0hLFQ](https://youtu.be/DwvsKS0hLFQ)
+
+## Gendiff — формат JSON
+
+[https://youtu.be/7aUxKwUFXg4](https://youtu.be/7aUxKwUFXg4)
