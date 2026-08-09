@@ -4,6 +4,7 @@ namespace Differ\Differ;
 
 use function Funct\Collection\sortBy;
 use function Differ\Formatters\format;
+use function Differ\Parsers\parse;
 
 function buildDiff(object $data1, object $data2): array
 {
@@ -61,13 +62,34 @@ function buildDiff(object $data1, object $data2): array
     }, $sortedKeys);
 }
 
+function getFileContent(string $filepath): string
+{
+    if (!file_exists($filepath)) {
+        throw new \Exception("File not found: {$filepath}");
+    }
+
+    $content = file_get_contents($filepath);
+
+    if ($content === false) {
+        throw new \Exception("Unable to read file: {$filepath}");
+    }
+
+    return $content;
+}
+
 function genDiff(
     string $filepath1,
     string $filepath2,
     string $formatName = 'stylish'
 ): string {
-    $data1 = parseFile($filepath1);
-    $data2 = parseFile($filepath2);
+    $content1 = getFileContent($filepath1);
+    $content2 = getFileContent($filepath2);
+
+    $format1 = pathinfo($filepath1, PATHINFO_EXTENSION);
+    $format2 = pathinfo($filepath2, PATHINFO_EXTENSION);
+
+    $data1 = parse($content1, $format1);
+    $data2 = parse($content2, $format2);
 
     $tree = buildDiff($data1, $data2);
 

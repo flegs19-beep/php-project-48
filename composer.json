@@ -5,7 +5,6 @@
     ],
     "autoload": {
         "files": [
-            "src/Parser.php",
             "src/Parsers.php",
             "src/Formatters.php",
             "src/Formatters/Stylish.php",
