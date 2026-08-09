@@ -2,163 +2,67 @@
 
 namespace Differ\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function Differ\Differ\genDiff;
 
 class DifferTest extends TestCase
 {
-    public function testGenDiffJson(): void
-    {
-        $file1 = __DIR__ . '/fixtures/file1.json';
-        $file2 = __DIR__ . '/fixtures/file2.json';
+    #[DataProvider('diffProvider')]
+    public function testGenDiff(
+        string $extension,
+        string $format,
+        string $expectedFile
+    ): void {
+        $file1 = __DIR__ . "/fixtures/file1.{$extension}";
+        $file2 = __DIR__ . "/fixtures/file2.{$extension}";
+        $expectedPath = __DIR__ . "/fixtures/{$expectedFile}";
 
-        $expected = <<<'TXT'
-{
-    common: {
-      + follow: false
-        setting1: Value 1
-      - setting2: 200
-      - setting3: true
-      + setting3: null
-      + setting4: blah blah
-      + setting5: {
-            key5: value5
-        }
-        setting6: {
-            doge: {
-              - wow: 
-              + wow: so much
-            }
-            key: value
-          + ops: vops
-        }
-    }
-    group1: {
-      - baz: bas
-      + baz: bars
-        foo: bar
-      - nest: {
-            key: value
-        }
-      + nest: str
-    }
-  - group2: {
-        abc: 12345
-        deep: {
-            id: 45
-        }
-    }
-  + group3: {
-        deep: {
-            id: {
-                number: 45
-            }
-        }
-        fee: 100500
-    }
-}
-TXT;
+        $expected = str_replace(
+            "\r\n",
+            "\n",
+            rtrim((string) file_get_contents($expectedPath))
+        );
 
-        $actual = genDiff($file1, $file2);
+        $actual = genDiff($file1, $file2, $format);
 
         $this->assertSame($expected, $actual);
     }
 
-    public function testGenDiffYaml(): void
+    public static function diffProvider(): array
     {
-        $file1 = __DIR__ . '/fixtures/file1.yml';
-        $file2 = __DIR__ . '/fixtures/file2.yml';
-
-        $expected = <<<'TXT'
-{
-    common: {
-      + follow: false
-        setting1: Value 1
-      - setting2: 200
-      - setting3: true
-      + setting3: null
-      + setting4: blah blah
-      + setting5: {
-            key5: value5
-        }
-        setting6: {
-            doge: {
-              - wow: 
-              + wow: so much
-            }
-            key: value
-          + ops: vops
-        }
-    }
-    group1: {
-      - baz: bas
-      + baz: bars
-        foo: bar
-      - nest: {
-            key: value
-        }
-      + nest: str
-    }
-  - group2: {
-        abc: 12345
-        deep: {
-            id: 45
-        }
-    }
-  + group3: {
-        deep: {
-            id: {
-                number: 45
-            }
-        }
-        fee: 100500
+        return [
+            'json stylish' => [
+                'json',
+                'stylish',
+                'expected_stylish.txt',
+            ],
+            'yaml stylish' => [
+                'yml',
+                'stylish',
+                'expected_stylish.txt',
+            ],
+            'json plain' => [
+                'json',
+                'plain',
+                'expected_plain.txt',
+            ],
+            'yaml plain' => [
+                'yml',
+                'plain',
+                'expected_plain.txt',
+            ],
+            'json json' => [
+                'json',
+                'json',
+                'expected_json.json',
+            ],
+            'yaml json' => [
+                'yml',
+                'json',
+                'expected_json.json',
+            ],
+        ];
     }
 }
-TXT;
-
-        $actual = genDiff($file1, $file2);
-
-        $this->assertSame($expected, $actual);
-    }
-
-    public function testGenDiffPlain(): void
-    {
-        $file1 = __DIR__ . '/fixtures/file1.json';
-        $file2 = __DIR__ . '/fixtures/file2.json';
-
-        $expected = <<<'TXT'
-    Property 'common.follow' was added with value: false
-    Property 'common.setting2' was removed
-    Property 'common.setting3' was updated. From true to null
-    Property 'common.setting4' was added with value: 'blah blah'
-    Property 'common.setting5' was added with value: [complex value]
-    Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
-    Property 'common.setting6.ops' was added with value: 'vops'
-    Property 'group1.baz' was updated. From 'bas' to 'bars'
-    Property 'group1.nest' was updated. From [complex value] to 'str'
-    Property 'group2' was removed
-    Property 'group3' was added with value: [complex value]
-    TXT;
-
-        $actual = genDiff($file1, $file2, 'plain');
-
-        $this->assertSame($expected, $actual);
-    }
-
-    public function testGenDiffJsonFormat(): void
-    {
-        $file1 = __DIR__ . '/fixtures/file1.json';
-        $file2 = __DIR__ . '/fixtures/file2.json';
-
-        $actual = genDiff($file1, $file2, 'json');
-
-        $decoded = json_decode($actual, true);
-
-        $this->assertIsArray($decoded);
-    }
-
-
-}
-
-
