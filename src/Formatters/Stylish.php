@@ -18,13 +18,23 @@ function stringify(mixed $value, int $depth): string
 
     $indent = str_repeat(' ', ($depth + 1) * 4);
     $bracketIndent = str_repeat(' ', $depth * 4);
+    $keys = array_keys(get_object_vars($value));
 
     $lines = array_map(
-        fn($key) => "{$indent}{$key}: " . stringify($value->$key, $depth + 1),
-        array_keys(get_object_vars($value))
+        fn($key) => sprintf(
+            '%s%s: %s',
+            $indent,
+            $key,
+            stringify($value->$key, $depth + 1)
+        ),
+        $keys
     );
 
-    return "{\n" . implode("\n", $lines) . "\n{$bracketIndent}}";
+    return sprintf(
+        "{\n%s\n%s}",
+        implode("\n", $lines),
+        $bracketIndent
+    );
 }
 
 function format(array $tree, int $depth = 1): string
@@ -37,20 +47,48 @@ function format(array $tree, int $depth = 1): string
         switch ($node['type']) {
             case 'nested':
                 $children = format($node['children'], $depth + 1);
-                return "{$indent}  {$key}: {$children}";
+
+                return sprintf(
+                    '%s  %s: %s',
+                    $indent,
+                    $key,
+                    $children
+                );
 
             case 'unchanged':
-                return "{$indent}  {$key}: " . stringify($node['value'], $depth);
+                return sprintf(
+                    '%s  %s: %s',
+                    $indent,
+                    $key,
+                    stringify($node['value'], $depth)
+                );
 
             case 'removed':
-                return "{$indent}- {$key}: " . stringify($node['value'], $depth);
+                return sprintf(
+                    '%s- %s: %s',
+                    $indent,
+                    $key,
+                    stringify($node['value'], $depth)
+                );
 
             case 'added':
-                return "{$indent}+ {$key}: " . stringify($node['value'], $depth);
+                return sprintf(
+                    '%s+ %s: %s',
+                    $indent,
+                    $key,
+                    stringify($node['value'], $depth)
+                );
 
             case 'changed':
-                return "{$indent}- {$key}: " . stringify($node['oldValue'], $depth)
-                    . "\n{$indent}+ {$key}: " . stringify($node['newValue'], $depth);
+                return sprintf(
+                    "%s- %s: %s\n%s+ %s: %s",
+                    $indent,
+                    $key,
+                    stringify($node['oldValue'], $depth),
+                    $indent,
+                    $key,
+                    stringify($node['newValue'], $depth)
+                );
         }
 
         return '';
@@ -58,5 +96,9 @@ function format(array $tree, int $depth = 1): string
 
     $bracketIndent = str_repeat(' ', ($depth - 1) * 4);
 
-    return "{\n" . implode("\n", $lines) . "\n{$bracketIndent}}";
+    return sprintf(
+        "{\n%s\n%s}",
+        implode("\n", $lines),
+        $bracketIndent
+    );
 }
