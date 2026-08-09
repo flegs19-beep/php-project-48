@@ -37,6 +37,11 @@ function stringify(mixed $value, int $depth): string
     );
 }
 
+function formatLine(string $indent, string $sign, string $key, string $value): string
+{
+    return sprintf('%s%s %s: %s', $indent, $sign, $key, $value);
+}
+
 function format(array $tree, int $depth = 1): string
 {
     $indent = str_repeat(' ', $depth * 4 - 2);
@@ -46,49 +51,52 @@ function format(array $tree, int $depth = 1): string
 
         switch ($node['type']) {
             case 'nested':
-                $children = format($node['children'], $depth + 1);
-
-                return sprintf(
-                    '%s  %s: %s',
+                return formatLine(
                     $indent,
+                    ' ',
                     $key,
-                    $children
+                    format($node['children'], $depth + 1)
                 );
 
             case 'unchanged':
-                return sprintf(
-                    '%s  %s: %s',
+                return formatLine(
                     $indent,
+                    ' ',
                     $key,
                     stringify($node['value'], $depth)
                 );
 
             case 'removed':
-                return sprintf(
-                    '%s- %s: %s',
+                return formatLine(
                     $indent,
+                    '-',
                     $key,
                     stringify($node['value'], $depth)
                 );
 
             case 'added':
-                return sprintf(
-                    '%s+ %s: %s',
+                return formatLine(
                     $indent,
+                    '+',
                     $key,
                     stringify($node['value'], $depth)
                 );
 
             case 'changed':
-                return sprintf(
-                    "%s- %s: %s\n%s+ %s: %s",
-                    $indent,
-                    $key,
-                    stringify($node['oldValue'], $depth),
-                    $indent,
-                    $key,
-                    stringify($node['newValue'], $depth)
-                );
+                return implode("\n", [
+                    formatLine(
+                        $indent,
+                        '-',
+                        $key,
+                        stringify($node['oldValue'], $depth)
+                    ),
+                    formatLine(
+                        $indent,
+                        '+',
+                        $key,
+                        stringify($node['newValue'], $depth)
+                    ),
+                ]);
         }
 
         return '';
