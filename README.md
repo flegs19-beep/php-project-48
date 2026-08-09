@@ -1,4 +1,6 @@
-### Hexlet tests and linter status:
+# Вычислитель отличий
+
+### Статус тестов и линтера Hexlet
 [![Actions Status](https://github.com/flegs19-beep/php-project-48/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/flegs19-beep/php-project-48/actions)
 [![PHP CI](https://github.com/flegs19-beep/php-project-48/actions/workflows/workflow.yml/badge.svg)](https://github.com/flegs19-beep/php-project-48/actions/workflows/workflow.yml)
 
@@ -17,6 +19,59 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=flegs19-beep_php-project-48&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=flegs19-beep_php-project-48)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=flegs19-beep_php-project-48&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=flegs19-beep_php-project-48)
 
+
+## Описание
+
+«Вычислитель отличий» — консольная утилита для сравнения двух файлов конфигурации. Программа определяет различия между файлами и выводит результат в выбранном формате. 
+
+Поддерживаемые входные форматы:
+
+- JSON
+- YAML
+
+Поддерживаемые форматы вывода:
+
+- stylish
+- plain
+- json
+
+## Системные требования
+
+- PHP 8.2 или выше
+- Composer
+- Make
+
+## Установка
+
+Клонируйте репозиторий:
+
+```bash
+git clone https://github.com/flegs19-beep/php-project-48.git
+cd php-project-48
+```
+
+## Установите зависимости:
+
+```bash
+make install
+```
+
+## Использование:
+
+- Сравнение двух файлов в формате stylish:
+```bash
+bin/gendiff path/to/file1.json path/to/file2.json
+```
+
+- Сравнение в формате plain:
+```bash
+bin/gendiff --format plain path/to/file1.json path/to/file2.json
+```
+
+- Сравнение в формате json:
+```bash
+bin/gendiff --format json path/to/file1.json path/to/file2.json
+```
 
 ## Gendiff — сравнение JSON-файлов
 
