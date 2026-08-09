@@ -4,9 +4,6 @@
         "bin/gendiff"
     ],
     "autoload": {
-        "psr-4": {
-            "Differ\\Differ\\": "src/"
-        },
         "files": [
             "src/Parser.php",
             "src/Parsers.php",
