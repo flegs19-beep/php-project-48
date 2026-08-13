@@ -19,16 +19,30 @@ class DifferTest extends TestCase
         $file2 = __DIR__ . "/fixtures/file2.{$extension}";
         $expectedPath = __DIR__ . "/fixtures/{$expectedFile}";
 
-        $expected = str_replace(
-            "\r\n",
-            "\n",
-            rtrim((string) file_get_contents($expectedPath))
-        );
-
         $actual = genDiff($file1, $file2, $format);
 
-        $this->assertSame($expected, $actual);
+        $this->assertStringEqualsFile(
+            $expectedPath,
+            $actual
+        );
+
     }
+
+    #[DataProvider('defaultFormatProvider')]
+    public function testGenDiffWithDefaultFormat(string $extension): void
+    {
+        $file1 = __DIR__ . "/fixtures/file1.{$extension}";
+        $file2 = __DIR__ . "/fixtures/file2.{$extension}";
+        $expectedPath = __DIR__ . '/fixtures/expected_stylish.txt';
+
+        $actual = genDiff($file1, $file2);
+
+        $this->assertStringEqualsFile(
+            $expectedPath,
+            $actual
+        );
+    }
+
 
     public static function diffProvider(): array
     {
@@ -65,4 +79,13 @@ class DifferTest extends TestCase
             ],
         ];
     }
+
+    public static function defaultFormatProvider(): array
+    {
+        return [
+            'json default' => ['json'],
+            'yaml default' => ['yml'],
+        ];
+    }
+
 }

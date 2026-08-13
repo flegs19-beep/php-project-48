@@ -16,5 +16,8 @@ function format(array $tree, string $formatName): string
         return formatJson($tree);
     }
 
-    return formatStylish($tree);
+    if ($formatName === 'stylish') {
+        return formatStylish($tree);
+    }
+    throw new \Exception("Unknown format: {$formatName}");
 }

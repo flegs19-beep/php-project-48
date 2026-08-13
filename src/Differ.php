@@ -6,6 +6,26 @@ use function Funct\Collection\sortBy;
 use function Differ\Formatters\format;
 use function Differ\Parsers\parse;
 
+function genDiff(
+    string $filepath1,
+    string $filepath2,
+    string $formatName = 'stylish'
+): string {
+    $content1 = getFileContent($filepath1);
+    $content2 = getFileContent($filepath2);
+
+    $format1 = pathinfo($filepath1, PATHINFO_EXTENSION);
+    $format2 = pathinfo($filepath2, PATHINFO_EXTENSION);
+
+    $data1 = parse($content1, $format1);
+    $data2 = parse($content2, $format2);
+
+    $tree = buildDiff($data1, $data2);
+
+    return format($tree, $formatName);
+}
+
+
 function buildDiff(object $data1, object $data2): array
 {
     $keys1 = array_keys(get_object_vars($data1));
@@ -75,23 +95,4 @@ function getFileContent(string $filepath): string
     }
 
     return $content;
-}
-
-function genDiff(
-    string $filepath1,
-    string $filepath2,
-    string $formatName = 'stylish'
-): string {
-    $content1 = getFileContent($filepath1);
-    $content2 = getFileContent($filepath2);
-
-    $format1 = pathinfo($filepath1, PATHINFO_EXTENSION);
-    $format2 = pathinfo($filepath2, PATHINFO_EXTENSION);
-
-    $data1 = parse($content1, $format1);
-    $data2 = parse($content2, $format2);
-
-    $tree = buildDiff($data1, $data2);
-
-    return format($tree, $formatName);
 }
